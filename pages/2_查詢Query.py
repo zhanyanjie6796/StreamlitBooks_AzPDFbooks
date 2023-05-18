@@ -115,7 +115,8 @@ def main():
     # print(result)
     # print(result,file=open('demo.txt', 'w',encoding='UTF-8'))
 
-    st.write("===================================================")
+    # st.write("===================================================")
+    st.markdown('----')
     # Print Answer
     st.write("你的問題是："+result['question'])
     st.write("答案是："+result['answer'])
