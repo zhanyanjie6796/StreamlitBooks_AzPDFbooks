@@ -10,7 +10,7 @@ if os.getenv("AZURE_OPENAI_API_KEY") is not None:
 
 # 輸入 AZURE_OPENAI_API_KEY  
 if 'AZURE_OPENAI_API_KEY' not in st.session_state or st.session_state['AZURE_OPENAI_API_KEY'] == "": 
-    inputkey = st.text_input("請輸入您的 AZURE OPENAI_API_KEY：例如xx39d931157d574944954f02a48c6567xx")           
+    inputkey = st.text_input("請輸入您的 AZURE OPENAI_API_KEY：例如39............................bb")           
     st.session_state['AZURE_OPENAI_API_KEY'] = inputkey
 
 if st.session_state['AZURE_OPENAI_API_KEY'] != "":
