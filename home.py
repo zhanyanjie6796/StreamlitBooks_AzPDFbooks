@@ -1,6 +1,6 @@
 import streamlit as st
 st.markdown('# Azure PDF Books')
-st.markdown('### 演示 Azure Open AI LangChain 多 PDF 的嵌入和查詢')
+st.markdown('### 演示 Azure Open AI LangChain 多 PDF 的嵌入和詢問')
 st.markdown('----')
 
 # 測試環境使用 AZURE_OPENAI_API_KEY 設定在 Streamlit 後臺。

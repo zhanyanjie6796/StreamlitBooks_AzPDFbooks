@@ -7,23 +7,22 @@ def style_func():
 
 def main():
     # AZURE_OPENAI_API_KEY  
-    if 'AZURE_OPENAI_API_KEY' not in st.session_state or st.session_state['AZURE_OPENAI_API_KEY'] == "":
-        st.write('請回到首頁 home 輸入您的 AZURE OPENAI_API_KEY 再回來。')
+    if 'AZURE_OPENAI_API_KEY' not in st.session_state or st.session_state['AZURE_OPENAI_API_KEY'] == "":        
+        st.markdown("###### 請回到首頁 home 輸入您的 AZURE OPENAI_API_KEY 再回來。")
         import sys # st.write('== 中斷測試 ==')
         sys.exit('== 中斷測試 ==')
     else:
-        st.write('您的 AZURE OPENAI_API_KEY：', st.session_state['AZURE_OPENAI_API_KEY'])  
+        # st.write('您的 AZURE OPENAI_API_KEY：', st.session_state['AZURE_OPENAI_API_KEY'])  
+        st.markdown("## Query 詢問")
     
     st.write('這裏的查詢資料以 docs1_AI 中的 PDF 檔案之向量索引爲例。')
-    title  = st.text_input("請輸入您要詢問的問題，例如：人工智慧的應用場景分成四大面向,台灣式繁體中文回答。")
+    title  = st.text_input("###### 請輸入您要詢問的問題，例如：人工智慧的應用場景分成四大面向,台灣式繁體中文回答。")
 
     if title == "":
         import sys # st.write('== 中斷測試 ==')
         sys.exit('== 中斷測試 ==')
     # st.write('您的問題：', title)
-    st.write('正在為您分析中 。。。。。。')    
-
-    # 函式測試???????????????????????
+    st.markdown("###### 使用模型：gpt-35-turbo 為您分析中 。。。。。。")
 
     import os
     # from dotenv import load_dotenv
@@ -89,8 +88,7 @@ def main():
     llm = AzureChatOpenAI(deployment_name="gpt-35-turbo", model_name="gpt-35-turbo", temperature=0.5, max_tokens=500) 
     # llm = AzureChatOpenAI(deployment_name="gpt-4", model_name="gpt-4", temperature=0.5, max_tokens=500) 
     # llm = AzureChatOpenAI(deployment_name="gpt-4-32k", model_name="gpt-4-32k", temperature=0.5, max_tokens=500)
-
-
+   
     from langchain.chains import RetrievalQAWithSourcesChain
     chain_type_kwargs = {"prompt": prompt}
     chain = RetrievalQAWithSourcesChain.from_chain_type(
@@ -116,17 +114,20 @@ def main():
     # print(result,file=open('demo.txt', 'w',encoding='UTF-8'))
 
     # st.write("===================================================")
-    st.markdown('----')
     # Print Answer
-    st.write("你的問題是："+result['question'])
+    # st.write("你的問題是："+result['question'])
+    st.markdown("###### 你的問題是："+result['question'])
     st.write("答案是："+result['answer'])
-
+    st.markdown('----')
+    
     # Print Sources
     source_documents = result['source_documents']
     for index, document in enumerate(source_documents):
-        # txt = st.text_area("文獻來源：", "哈哈哈\n你好") 
-        # st.write(f"\n\nSource {index + 1}:")
-        txt = st.text_area("Source"+str(index + 1)+"&nbsp;&nbsp;&nbsp;&nbsp;檔名："+document.metadata['source']+"&nbsp;&nbsp;&nbsp;&nbsp;頁碼："+str(document.metadata['page']+1), document.page_content)
+        # txt = st.text_area("文獻來源：", "哈哈哈\n你好")         
+        st.text_area("###### Source"+str(index + 1)+"&nbsp;&nbsp;&nbsp;&nbsp;檔名："+
+                     document.metadata['source']+"&nbsp;&nbsp;&nbsp;&nbsp;頁碼："+
+                     str(document.metadata['page']+1), 
+                     document.page_content,height=150)
         # 下面是原本的程式
         # st.write(f"\n\nSource {index + 1}:")
         # st.write("檔名："+document.metadata['source']+"    頁碼："+str(document.metadata['page']+1))    
@@ -136,25 +137,12 @@ def main():
 
     # 結束測量轉換時間
     end = time.time()
-    st.write("query 執行時間：%f 秒" % (end - start))     
+    st.markdown("###### query 執行時間：%f 秒" % (end - start))
+    # st.write("query 執行時間：%f 秒" % (end - start))     
     # st.write("==== end =====================================================")   
    
-    import sys # st.write('== 中斷測試 ==')
-    sys.exit('== 中斷測試 ==')
-
-    txt = st.text_area('文獻來源：', '''
-    It was the best of times, it was the worst of times, it was
-    the age of wisdom, it was the age of foolishness, it was
-    the epoch of belief, it was the epoch of incredulity, it
-    was the season of Light, it was the season of Darkness, it
-    was the spring of hope, it was the winter of despair, (...)
-    ''')
-    st.write('Sentiment:', (txt))    
-
-
-    if st.button('開始進行風格化處理'):
-        style_func()
-
+    # import sys # st.write('== 中斷測試 ==')
+    # sys.exit('== 中斷測試 ==')
 
     
 if __name__ == "__main__":
